@@ -60,15 +60,47 @@ class User extends CI_Controller
                 $this->db->set('image', $new_image);
             } else {
                 $error =  $this->upload->display_errors();
-                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">' . $error . ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-                redirect('user');
+                flashDataMessage($error, 'danger', 'user');
             }
 
             $this->db->set('name', $name);
             $this->db->where('email', $email);
             $this->db->update('user');
-            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert"> Profile berhasil di update<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-            redirect('user');
+            flashDataMessage('Update Success', 'success', 'user');
+        }
+    }
+
+    public function changePassword()
+    {
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['title'] = 'Change Password';
+
+        $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
+        $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|matches[new_password2]');
+        $this->form_validation->set_rules('new_password2', 'Repeat Password', 'required|trim|matches[new_password1]');
+
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('user/changePassword', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $current_password = $this->input->post('current_password');
+            $new_password = $this->input->post('new_password1');
+            if (!password_verify($current_password, $data['user']['password'])) { // CURRENT PASSWORD SALAH
+                flashDataMessage('Wrong Current Password', 'danger', 'user/changePassword');
+            } else if ($current_password == $new_password) { // PASSWORD BARU SAMA DENGAN CURRENT PASSWORD
+                flashDataMessage('New Password cannot be same as current password', 'danger', 'user/changePassword');
+            } else { // OK UBAH PASSWORD BISA DIUBAH
+                $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+                $this->db->set('password', $password_hash);
+                $this->db->where('email', $data['user']['email']);
+                $this->db->update('user');
+
+                flashDataMessage('Password has been updated', 'success', 'user/changePassword');
+            }
         }
     }
 }
