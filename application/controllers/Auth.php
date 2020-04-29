@@ -6,11 +6,14 @@ class Auth extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('form_validation');
     }
 
     public function index() // ini login
     {
+        if ($this->session->userdata('email')) {
+            redirect('user');
+        }
+
         // aturan email
         $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email', [
             'required' => 'Email tidak boleh kosong',
@@ -27,11 +30,11 @@ class Auth extends CI_Controller
             $this->load->view('auth/login');
             $this->load->view('templates/auth_footer');
         } else {
-            $this->login();
+            $this->loginProcess();
         }
     }
 
-    private function login()
+    private function loginProcess()
     {
         $email = $this->input->post('email');
         $password = $this->input->post('password');
@@ -67,6 +70,10 @@ class Auth extends CI_Controller
 
     public function registration()
     {
+        if ($this->session->userdata('email')) {
+            redirect('user');
+        }
+
         // rules nama
         $this->form_validation->set_rules('name', 'Name', 'required|trim', [
             'required' => 'nama tidak boleh kosong'
@@ -102,7 +109,7 @@ class Auth extends CI_Controller
                 'date_created' => time()
             ];
             $this->db->insert('user', $data);
-            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert"> Registrasi Berhasil. Silahkan login untuk masuk<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert"> Registrasi Berhasil. Silahkan loginProcess untuk masuk<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             redirect('auth');
         }
     }
@@ -112,5 +119,12 @@ class Auth extends CI_Controller
         $this->session->unset_userdata('email');
         $this->session->unset_userdata('role_id');
         redirect('auth');
+    }
+
+    public function blocked()
+    {
+        $data['title'] = 'Access Blocked';
+        $this->load->view('templates/header', $data);
+        $this->load->view('auth/blocked');
     }
 }
