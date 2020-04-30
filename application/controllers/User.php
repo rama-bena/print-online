@@ -28,7 +28,7 @@ class User extends CI_Controller
 
         $this->form_validation->set_rules('name', 'Full Name', 'required|trim');
 
-        if ($this->form_validation->run() == false) {
+        if ($this->form_validation->run() == false) { // KLO NAMANYA GAK KOSONG
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
@@ -46,21 +46,21 @@ class User extends CI_Controller
                 $config['allowed_types'] = 'gif|jpg|png';
                 $config['max_size'] = '5120';
                 $config['upload_path'] = './assets/img/profile/';
-            }
 
-            $this->load->library('upload', $config);
+                $this->load->library('upload', $config);
 
-            if ($this->upload->do_upload('image')) {
-                $old_image = $data['user']['image'];
-                $new_image = $this->upload->data('file_name');
+                if ($this->upload->do_upload('image')) {
+                    $old_image = $data['user']['image'];
+                    $new_image = $this->upload->data('file_name');
 
-                if ($old_image != 'default.png') {
-                    unlink(FCPATH . 'assets/img/profile/' . $old_image);
+                    if ($old_image != 'default.png') {
+                        unlink(FCPATH . 'assets/img/profile/' . $old_image);
+                    }
+                    $this->db->set('image', $new_image);
+                } else {
+                    $error =  $this->upload->display_errors();
+                    flashDataMessage($error, 'danger', 'user');
                 }
-                $this->db->set('image', $new_image);
-            } else {
-                $error =  $this->upload->display_errors();
-                flashDataMessage($error, 'danger', 'user');
             }
 
             $this->db->set('name', $name);
