@@ -3,16 +3,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class User extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
         is_logged_in();
+        $this->load->model('User_model');
     }
 
-    public function index()
+    public function index()   // MY PROFILE
     {
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['user'] = $this->User_model->getUser();
         $data['title'] = 'My Profile';
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -23,7 +23,7 @@ class User extends CI_Controller
 
     public function editProfile()
     {
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['user'] = $this->User_model->getUser();
         $data['title'] = 'Edit Profile';
 
         $this->form_validation->set_rules('name', 'Full Name', 'required|trim');
@@ -57,7 +57,7 @@ class User extends CI_Controller
                         unlink(FCPATH . 'assets/img/profile/' . $old_image);
                     }
                     $this->db->set('image', $new_image);
-                } else {
+                } else {  // JIKA GAGAL UPLOAD
                     $error =  $this->upload->display_errors();
                     flashDataMessage($error, 'danger', 'user');
                 }
@@ -72,7 +72,7 @@ class User extends CI_Controller
 
     public function changePassword()
     {
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['user'] = $this->User_model->getUser();
         $data['title'] = 'Change Password';
 
         $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
@@ -94,11 +94,7 @@ class User extends CI_Controller
             } else if ($current_password == $new_password) { // PASSWORD BARU SAMA DENGAN CURRENT PASSWORD
                 flashDataMessage('New Password cannot be same as current password', 'danger', 'user/changePassword');
             } else { // OK UBAH PASSWORD BISA DIUBAH
-                $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
-                $this->db->set('password', $password_hash);
-                $this->db->where('email', $data['user']['email']);
-                $this->db->update('user');
-
+                $this->User_model->changePassword($new_password, $data['user']['email']);
                 flashDataMessage('Password has been updated', 'success', 'user/changePassword');
             }
         }

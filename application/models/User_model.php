@@ -1,6 +1,6 @@
 <?php
 
-class Admin_model extends CI_Model
+class User_model extends CI_Model
 {
 
     public function getUser()
@@ -10,15 +10,17 @@ class Admin_model extends CI_Model
 
     public function getAllDataUser()
     {
-        $query = "SELECT `user`.* , `user_role`.`role` FROM `user` 
+        $query = "SELECT * FROM `user` 
                   JOIN `user_role` 
                    ON `role_id` = `user_role`.`id`";
         return $this->db->query($query)->result_array();
     }
 
-    public function deleteUser($id)
+    public function changePassword($new_password, $email)
     {
-        $this->db->where('id', $id);
-        $this->db->delete('user');
+        $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+        $this->db->set('password', $password_hash);
+        $this->db->where('email', $email);
+        $this->db->update('user');
     }
 }

@@ -24,6 +24,7 @@ class Admin extends CI_Controller
 
     public function userSetting()
     {
+        $data['user'] = $this->Admin_model->getUser();
         $data['title'] = 'User Setting';
         $data['allUser'] = $this->Admin_model->getAllDataUser();
 
@@ -32,5 +33,15 @@ class Admin extends CI_Controller
         $this->load->view('templates/topbar', $data);
         $this->load->view('admin/userSetting', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function deleteUser($idNow, $idDelete)
+    {
+        if ($idNow == $idDelete) {
+            flashDataMessage("You can't delete yourself", 'danger', 'admin/userSetting');
+        } else {
+            $this->Admin_model->deleteUser($idDelete);
+            $this->userSetting();
+        }
     }
 }
