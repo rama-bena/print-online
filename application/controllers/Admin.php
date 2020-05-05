@@ -44,4 +44,14 @@ class Admin extends CI_Controller
             $this->userSetting();
         }
     }
+
+    public function changeRole($idNow, $idChange)
+    {
+        $this->Admin_model->changeRole($idChange, $this->input->post('radio'));
+        if ($idNow == $idChange && $this->input->post('radio') == '2') {
+            redirect('user');
+        } else {
+            redirect('admin/userSetting');
+        }
+    }
 }

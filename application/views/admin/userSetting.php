@@ -27,7 +27,7 @@
                         <td><?= ($au['is_active'] ? 'Yes' : 'No'); ?></td>
                         <td>
                             <a href="#" data-toggle="modal" data-target="#detail-<?= $au['id']; ?>" class="badge badge-primary">Detail</a>
-                            <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg" class="badge badge-success">Change Role</a>
+                            <a href="#" data-toggle="modal" data-target="#change-<?= $au['id']; ?>" class="badge badge-success">Change Role</a>
                             <a href="#" data-toggle="modal" data-target="#delete-<?= $au['id']; ?>" class="badge badge-danger">Delete</a>
                         </td>
                     </tr>
@@ -96,24 +96,36 @@
             </div>
         </div>
 
-        <!-- MODAL DELETE -->
-        <div class="modal fade" id="delete-<?= $au['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- MODAL CHANGE -->
+        <div class="modal fade" id="change-<?= $au['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Delete User</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Change Role</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <p>Are you sure want to delete <?= $au['email']; ?></p>
-                        <p>Once you delete you can't get back the user</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-danger" href="<?= base_url('admin/deleteUser/') . $user['id'] . '/' . $au['id']; ?>">Delete</a>
-                    </div>
+                    <form action="<?= base_url('admin/changeRole/') . $user['id'] . '/' . $au['id']; ?>" method="POST">
+                        <div class="modal-body">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="radio" id="administrator" value="1" <?= ($au['role'] == 'Administrator') ? 'checked' : '' ?>>
+                                <label class="form-check-label" for="administrator">
+                                    Administrator
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="radio" id="member" value="2" <?= ($au['role'] == 'Member') ? 'checked' : '' ?>>
+                                <label class="form-check-label" for="member">
+                                    Member
+                                </label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <input class="btn btn-primary" type="submit" value="Change">
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
