@@ -8,11 +8,12 @@ class User extends CI_Controller
         parent::__construct();
         is_logged_in();
         $this->load->model('User_model');
+        $this->load->model('General_model', 'model');
     }
 
     public function index()   // MY PROFILE
     {
-        $data['user'] = $this->User_model->getUser();
+        $data['user'] = $this->model->getUser();
         $data['title'] = 'My Profile';
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -23,7 +24,7 @@ class User extends CI_Controller
 
     public function editProfile()
     {
-        $data['user'] = $this->User_model->getUser();
+        $data['user'] = $this->model->getUser();
         $data['title'] = 'Edit Profile';
 
         $this->form_validation->set_rules('name', 'Full Name', 'required|trim');
@@ -53,9 +54,8 @@ class User extends CI_Controller
                     $old_image = $data['user']['image'];
                     $new_image = $this->upload->data('file_name');
 
-                    if ($old_image != 'default.png') {
-                        unlink(FCPATH . 'assets/img/profile/' . $old_image);
-                    }
+                    $this->model->deleteImage($old_image);
+
                     $this->db->set('image', $new_image);
                 } else {  // JIKA GAGAL UPLOAD
                     $error =  $this->upload->display_errors();
@@ -72,7 +72,7 @@ class User extends CI_Controller
 
     public function changePassword()
     {
-        $data['user'] = $this->User_model->getUser();
+        $data['user'] = $this->model->getUser();
         $data['title'] = 'Change Password';
 
         $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');

@@ -2,22 +2,13 @@
 
 class Admin_model extends CI_Model
 {
-
-    public function getUser()
-    {
-        return $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-    }
-
-    public function getAllDataUser()
-    {
-        $query = "SELECT `user`.* , `user_role`.`role` FROM `user` 
-                  JOIN `user_role` 
-                   ON `role_id` = `user_role`.`id`";
-        return $this->db->query($query)->result_array();
-    }
-
     public function deleteUser($id)
     {
+        $user = $this->db->get_where('user', ['id' => $id])->row_array();
+
+        $this->load->model('General_model', 'model');
+        $this->model->deleteImage($user['image']);
+
         $this->db->where('id', $id);
         $this->db->delete('user');
     }

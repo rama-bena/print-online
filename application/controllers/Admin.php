@@ -9,11 +9,12 @@ class Admin extends CI_Controller
         parent::__construct();
         is_logged_in();
         $this->load->model('Admin_model');
+        $this->load->model('General_model', 'model');
     }
 
     public function index()
     {
-        $data['user'] = $this->Admin_model->getUser();
+        $data['user'] = $this->model->getUser();
         $data['title'] = 'Dashboard';
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -24,9 +25,9 @@ class Admin extends CI_Controller
 
     public function userSetting()
     {
-        $data['user'] = $this->Admin_model->getUser();
+        $data['user'] = $this->model->getUser();
         $data['title'] = 'User Setting';
-        $data['allUser'] = $this->Admin_model->getAllDataUser();
+        $data['allUser'] = $this->model->getAllDataUser();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -41,7 +42,7 @@ class Admin extends CI_Controller
             flashDataMessage("You can't delete yourself", 'danger', 'admin/userSetting');
         } else {
             $this->Admin_model->deleteUser($idDelete);
-            $this->userSetting();
+            redirect('admin/userSetting');
         }
     }
 
