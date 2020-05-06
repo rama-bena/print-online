@@ -10,13 +10,25 @@
             <?= $this->session->flashdata('message'); ?>
             <form action="<?= base_url('order'); ?>" method="POST" enctype="multipart/form-data">
                 <div class="form-group row">
-                    <label for="file" class="col-sm-3 col-form-label">File</label>
+                    <label for="title" class="col-sm-3 col-form-label">Title <sup class="text-danger">*</sup></label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="title" name="title">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="file" class="col-sm-3 col-form-label">File<sup class="text-danger">*</sup></label>
                     <div class="col-sm-9">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="file" name="file">
                             <label class="custom-file-label" for="file">Choose file</label>
                         </div>
                         <?= form_error('file', '<small class="text-danger pl-3">', '</small>'); ?>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="num_print" class="col-sm-3 col-form-label">Number of prints <sup class="text-danger">*</sup></label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" id="num_print" name="num_print" value="1" min="1">
                     </div>
                 </div>
                 <div class="form-group row">
