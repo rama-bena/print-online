@@ -62,6 +62,8 @@ class Order extends CI_Controller
     {
         echo '<pre>';
         var_dump($_FILES);
+        echo '<br>';
+        var_dump($_POST);
         echo '</pre>';
         die;
     }

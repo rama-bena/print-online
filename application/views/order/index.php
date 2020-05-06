@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-lg-8">
             <?= $this->session->flashdata('message'); ?>
-            <form action="<?= base_url('order'); ?>" method="POST" enctype="multipart/form-data">
+            <form action="<?= base_url('order/printNow'); ?>" method="POST" enctype="multipart/form-data">
                 <div class="form-group row">
                     <label for="title" class="col-sm-3 col-form-label">Title <sup class="text-danger">*</sup></label>
                     <div class="col-sm-9">
@@ -38,8 +38,27 @@
                     </div>
                 </div>
                 <div class="form-group row justify-content-end mt-5">
-                    <div>
-                        <input type="submit" name="uploadFile" class="btn btn-primary" value="Print">
+                    <a href="" class="btn btn-primary" data-target="#printModal" data-toggle="modal">Print</a>
+                </div>
+
+                <!-- PRINT MODAL -->
+                <div class="modal fade" id="printModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Are you sure want to upload file to print?</h5>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Make sure your data is correct. Once you upload file you can't cancel it.
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                <input type="submit" name="uploadFile" class="btn btn-primary" value="Print">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>
