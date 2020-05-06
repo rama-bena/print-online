@@ -15,42 +15,6 @@ class Order extends CI_Controller
     {
         $data['user'] = $this->model->getUser();
         $data['title'] = 'Print Now';
-
-        if ($this->input->post('uploadFile')) {
-            $this->form_validation->set_rules('file', 'File', 'callback_file_check');
-
-            if ($this->form_validation->run() == false) {
-                $this->viewPrintNow($data);
-            } else {
-                $config['upload_path']   = './file-print/';
-                $config['allowed_types'] = 'gif|jpg|png|pdf|doc|docx|zip|rar';
-                $config['max_size']      = 50 * 1024;
-                $this->load->library('upload', $config);
-
-                //upload file to directory
-                if ($this->upload->do_upload('file')) {
-                    $uploadData = $this->upload->data();
-                    $uploadedFile = $uploadData['file_name'];
-
-                    flashDataMessage('File berhasil di upload', 'success', 'order');
-                } else {
-                    $data['error_msg'] = $this->upload->display_errors();
-                    flashDataMessage($this->upload->display_errors() . " " . $_FILES['file']['name'], 'danger', 'order');
-                }
-            }
-        } else {
-            $this->viewPrintNow($data);
-        }
-    }
-
-    public function file_check($str)
-    {
-        $this->form_validation->set_message('file_check', 'Please select file.');
-        return ($_FILES['file']['name'] && $_FILES['file']['name'] != '');
-    }
-
-    private function viewPrintNow($data)
-    {
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -60,12 +24,35 @@ class Order extends CI_Controller
 
     public function printNow()
     {
-        echo '<pre>';
-        var_dump($_FILES);
-        echo '<br>';
-        var_dump($_POST);
-        echo '</pre>';
-        die;
+
+        if (!$this->input->post('uploadFile')) {
+            $this->index();
+        }
+
+        $this->form_validation->set_rules('title', 'Title', 'required|trim');
+        $this->form_validation->set_rules('file', 'File', 'callback_file_check');
+        $this->form_validation->set_rules('num_print', 'Number of prints', 'required|trim|greater_than[0]');
+        $this->form_validation->set_rules('keterangan', 'Keterangan', 'max_length[256]');
+        $this->form_validation->set_message('max_length', '%s: the minimum of characters is %s');
+
+        if ($this->form_validation->run() == false) { // gagal validasi awal
+            $this->index();
+        }
+
+        $result = $this->Order_model->printNowProcess();
+
+        if ($result['status'] == 'success') {
+            flashDataMessage('File berhasil di upload', 'success', 'order');
+        } else {
+            $data['error_msg'] = $result['error_msg'];
+            flashDataMessage($result['error_msg'] . " " . $_FILES['file']['name'], 'danger', 'order');
+        }
+    }
+
+    public function file_check($str)
+    {
+        $this->form_validation->set_message('file_check', 'Please select file.');
+        return ($_FILES['file']['name'] && $_FILES['file']['name'] != '');
     }
 
     public function historyOrder()

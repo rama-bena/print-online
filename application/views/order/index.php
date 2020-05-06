@@ -13,6 +13,7 @@
                     <label for="title" class="col-sm-3 col-form-label">Title <sup class="text-danger">*</sup></label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="title" name="title">
+                        <?= form_error('title', '<small class="text-danger pl-3">', '</small>'); ?>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -30,11 +31,13 @@
                     <div class="col-sm-9">
                         <input type="number" class="form-control" id="num_print" name="num_print" value="1" min="1">
                     </div>
+                    <?= form_error('num_print', '<small class="text-danger pl-3">', '</small>'); ?>
                 </div>
                 <div class="form-group row">
                     <label for="keterangan" class="col-sm-3 col-form-label">Keterangan</label>
                     <div class="col-sm-9">
                         <textarea class="form-control" id="keterangan" name="keterangan" rows="2" placeholder="(Optional)"></textarea>
+                        <?= form_error('keterangan', '<small class="text-danger pl-3">', '</small>'); ?>
                     </div>
                 </div>
                 <div class="form-group row justify-content-end mt-5">

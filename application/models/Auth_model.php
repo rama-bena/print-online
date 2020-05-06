@@ -51,6 +51,8 @@ class Auth_model extends CI_Model
         $this->db->insert('user', $data);
         $this->db->insert('user_token', $user_token);
 
+        $user = $this->db->get_where('user', ['email' => $email])->row_array();
+        mkdir('./file-print/' . $user['id']);
         $this->sendEmail($token, 'verify', $email);
     }
 
@@ -91,8 +93,8 @@ class Auth_model extends CI_Model
     {
         $email = $this->input->get('email');
         $token = $this->input->get('token');
-
         $user = $this->db->get_where('user', ['email' => $email])->row_array();
+
         $user_token = $this->db->get_where('user_token', ['token' => $token])->row_array();
 
         if (!$user) { // USER TIDAK ADA
@@ -117,10 +119,12 @@ class Auth_model extends CI_Model
         }
 
         //VERIFIKASI BERHASIL
+
         $this->db->delete('user_token', ['token' => $token]);
         $this->db->set('is_active', 1);
         $this->db->where('email', $email);
         $this->db->update('user');
+
         return [
             'message' => "$email has been activated. Please Login",
             'type'    => 'success'
