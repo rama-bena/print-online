@@ -33,6 +33,7 @@ class Auth_model extends CI_Model
         $data = [
             'name' => htmlspecialchars($this->input->post('name', true)),
             'email' => htmlspecialchars($email),
+            'no_telp' => htmlspecialchars($this->input->post('no_telp', true)),
             'image' => 'default.png',
             'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
             'role_id' => 2,

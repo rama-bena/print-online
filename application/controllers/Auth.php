@@ -63,6 +63,10 @@ class Auth extends CI_Controller
             'valid_email' => 'email tidak valid',
             'is_unique' => 'email sudah terdaftar'
         ]);
+        // rules no_telp
+        $this->form_validation->set_rules('no_telp', 'No. Telp.', 'required|trim', [
+            'required' => 'No. Telp. tidak boleh kosong'
+        ]);
         // rules password1
         $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[3]|matches[password2]', [
             'required' => 'password tidak boleh kosong',
