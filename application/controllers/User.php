@@ -28,6 +28,7 @@ class User extends CI_Controller
         $data['title'] = 'Edit Profile';
 
         $this->form_validation->set_rules('name', 'Full Name', 'required|trim');
+        $this->form_validation->set_rules('no_telp', 'No. Telp.', 'required|trim');
 
         if ($this->form_validation->run() == false) { // KLO NAMANYA GAK KOSONG
             $this->load->view('templates/header', $data);
@@ -37,8 +38,7 @@ class User extends CI_Controller
             $this->load->view('templates/footer');
         } else {
             $name = $this->input->post('name');
-            $email = $this->input->post('email');
-
+            $noTelp = $this->input->post('no_telp');
 
             // Cek klo upload gambar
             $upload_image = $_FILES['image']['name'];
@@ -57,14 +57,15 @@ class User extends CI_Controller
                     $this->model->deleteImage($old_image);
 
                     $this->db->set('image', $new_image);
-                } else {  // JIKA GAGAL UPLOAD
+                } else {  // JIKA GAGAL UPLOAD gambar
                     $error =  $this->upload->display_errors();
                     flashDataMessage($error, 'danger', 'user');
                 }
             }
 
             $this->db->set('name', $name);
-            $this->db->where('email', $email);
+            $this->db->set('no_telp', $noTelp);
+            $this->db->where('email', $data['user']['email']);
             $this->db->update('user');
             flashDataMessage('Update Success', 'success', 'user');
         }

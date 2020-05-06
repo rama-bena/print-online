@@ -23,6 +23,13 @@
                 </div>
             </div>
             <div class="form-group row">
+                <label for="name" class="col-sm-2 col-form-label">No. Telp.</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="no_telp" name="no_telp" value="<?= $user['no_telp'] ?>">
+                    <?= form_error('no_telp', '<small class="text-danger pl-3">', '</small>'); ?>
+                </div>
+            </div>
+            <div class="form-group row">
                 <div class="col-sm-2">Picture</div>
                 <div class="col-sm-10">
                     <div class="row">

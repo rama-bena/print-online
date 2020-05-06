@@ -1,3 +1,6 @@
+*.VC.opendb
+*.VC.db
+
 .DS_Store
 
 application/cache/*
