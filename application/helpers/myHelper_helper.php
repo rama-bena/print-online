@@ -28,3 +28,13 @@ function flashDataMessage($message, $type, $redirect)
     $ci->session->set_flashdata('message', '<div class="alert alert-' . $type . ' alert-dismissible fade show" role="alert"> ' . $message . '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
     redirect($redirect);
 }
+
+function viewDefault($view, $data = [])
+{
+    $ci = get_instance();
+    $ci->load->view('templates/header', $data);
+    $ci->load->view('templates/sidebar', $data);
+    $ci->load->view('templates/topbar', $data);
+    $ci->load->view($view, $data);
+    $ci->load->view('templates/footer');
+}

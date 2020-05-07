@@ -15,11 +15,7 @@ class OrderPrint extends CI_Controller
     {
         $data['user'] = $this->model->getUser();
         $data['title'] = 'Print Now';
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('orderPrint/index', $data);
-        $this->load->view('templates/footer');
+        viewDefault('orderPrint/index', $data);
     }
 
     public function printNow()
@@ -59,11 +55,6 @@ class OrderPrint extends CI_Controller
     {
         $data['user'] = $this->model->getUser();
         $data['title'] = 'History Order';
-
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('orderPrint/historyOrder', $data);
-        $this->load->view('templates/footer');
+        viewDefault('orderPrint/historyOrder', $data);
     }
 }

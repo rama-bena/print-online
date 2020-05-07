@@ -16,11 +16,7 @@ class Admin extends CI_Controller
     {
         $data['user'] = $this->model->getUser();
         $data['title'] = 'Dashboard';
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('admin/index', $data);
-        $this->load->view('templates/footer');
+        viewDefault('admin/index', $data);
     }
 
     public function userSetting()
@@ -28,12 +24,7 @@ class Admin extends CI_Controller
         $data['user'] = $this->model->getUser();
         $data['title'] = 'User Setting';
         $data['allUser'] = $this->model->getAllDataUser();
-
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('admin/userSetting', $data);
-        $this->load->view('templates/footer');
+        viewDefault('admin/userSetting', $data);
     }
 
     public function deleteUser($idNow, $idDelete)

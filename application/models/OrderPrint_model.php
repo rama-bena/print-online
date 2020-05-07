@@ -19,7 +19,7 @@ class OrderPrint_model extends CI_Model
             $uploadedFile = $uploadData['file_name'];
 
             $dataFile = [
-                'id_user'    => $user['id'],
+                'id_member'  => $user['id'],
                 'title'      => $this->input->post('title'),
                 'filename'   => $uploadedFile,
                 'num_print'  => $this->input->post('num_print'),
@@ -27,17 +27,18 @@ class OrderPrint_model extends CI_Model
             ];
             $this->db->insert('print_file', $dataFile);
 
-            $file = $this->db->get_where('print_file', ['id_user' => $user['id'], 'filename' => $uploadedFile])->row_array();
+            $file = $this->db->get_where('print_file', ['id_member' => $user['id'], 'filename' => $uploadedFile])->row_array();
 
             $dataOrder = [
                 'id_file'      => $file['id'],
+                'id_employee'  => 0,
                 'id_status'    => 1,
                 'date_upload'  => time(),
                 'date_process' => 0,
                 'date_finish'  => 0,
                 'date_taken'   => 0,
                 'is_reject'    => 0,
-                'keterangan'   => ''
+                'keterangan_reject' => ''
             ];
 
             $this->db->insert('print_order', $dataOrder);

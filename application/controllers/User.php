@@ -15,11 +15,7 @@ class User extends CI_Controller
     {
         $data['user'] = $this->model->getUser();
         $data['title'] = 'My Profile';
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('user/index', $data);
-        $this->load->view('templates/footer');
+        viewDefault('user/index', $data);
     }
 
     public function editProfile()
@@ -31,11 +27,7 @@ class User extends CI_Controller
         $this->form_validation->set_rules('no_telp', 'No. Telp.', 'required|trim');
 
         if ($this->form_validation->run() == false) { // KLO NAMANYA GAK KOSONG
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('user/editProfile', $data);
-            $this->load->view('templates/footer');
+            viewDefault('user/editProfile', $data);
         } else {
             $name = $this->input->post('name');
             $noTelp = $this->input->post('no_telp');
@@ -82,11 +74,7 @@ class User extends CI_Controller
 
 
         if ($this->form_validation->run() == false) {
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('user/changePassword', $data);
-            $this->load->view('templates/footer');
+            viewDefault('user/changePassword', $data);
         } else {
             $current_password = $this->input->post('current_password');
             $new_password = $this->input->post('new_password1');

@@ -14,11 +14,6 @@ class Menu extends CI_Controller
         $data['title'] = 'Menu Management';
 
         $data['menu'] = $this->db->get('user_menu')->result_array();
-
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('menu/index', $data);
-        $this->load->view('templates/footer');
+        viewDefault('menu/index', $data);
     }
 }
