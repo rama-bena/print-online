@@ -108,18 +108,19 @@
                     </div>
                     <form action="<?= base_url('admin/changeRole/') . $user['id'] . '/' . $au['id']; ?>" method="POST">
                         <div class="modal-body">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="radio" id="administrator" value="1" <?= ($au['role'] == 'Administrator') ? 'checked' : '' ?>>
-                                <label class="form-check-label" for="administrator">
-                                    Administrator
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="radio" id="member" value="2" <?= ($au['role'] == 'Member') ? 'checked' : '' ?>>
-                                <label class="form-check-label" for="member">
-                                    Member
-                                </label>
-                            </div>
+                            <?php
+                            $user_roles = $this->db->get('user_role')->result_array();
+                            foreach ($user_roles as $user_role) :
+                                $role = $user_role['role'];
+                                $id = $user_role['id'];
+                            ?>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="radio" id="<?= $role; ?>" value="<?= $id; ?>" <?= ($au['role'] == $role) ? 'checked' : '' ?>>
+                                    <label class="form-check-label" for="<?= $role; ?>">
+                                        <?= $role; ?>
+                                    </label>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

@@ -1,13 +1,13 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Order extends CI_Controller
+class OrderPrint extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
         is_logged_in();
-        $this->load->model('Order_model');
+        $this->load->model('OrderPrint_model');
         $this->load->model('General_model', 'model');
     }
 
@@ -18,7 +18,7 @@ class Order extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
-        $this->load->view('order/index', $data);
+        $this->load->view('orderPrint/index', $data);
         $this->load->view('templates/footer');
     }
 
@@ -39,13 +39,13 @@ class Order extends CI_Controller
             $this->index();
         }
 
-        $result = $this->Order_model->printNowProcess();
+        $result = $this->OrderPrint_model->printNowProcess();
 
         if ($result['status'] == 'success') {
-            flashDataMessage('File berhasil di upload', 'success', 'order');
+            flashDataMessage('File berhasil di upload', 'success', 'orderPrint');
         } else {
             $data['error_msg'] = $result['error_msg'];
-            flashDataMessage($result['error_msg'] . " " . $_FILES['file']['name'], 'danger', 'order');
+            flashDataMessage($result['error_msg'] . " " . $_FILES['file']['name'], 'danger', 'orderPrint');
         }
     }
 
@@ -63,7 +63,7 @@ class Order extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
-        $this->load->view('order/historyOrder', $data);
+        $this->load->view('orderPrint/historyOrder', $data);
         $this->load->view('templates/footer');
     }
 }

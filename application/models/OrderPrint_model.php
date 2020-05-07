@@ -1,6 +1,6 @@
 <?php
 
-class Order_model extends CI_Model
+class OrderPrint_model extends CI_Model
 {
     public function printNowProcess()
     {

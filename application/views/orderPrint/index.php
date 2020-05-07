@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-lg-8">
             <?= $this->session->flashdata('message'); ?>
-            <form action="<?= base_url('order/printNow'); ?>" method="POST" enctype="multipart/form-data">
+            <form action="<?= base_url('orderPrint/printNow'); ?>" method="POST" enctype="multipart/form-data">
                 <div class="form-group row">
                     <label for="title" class="col-sm-3 col-form-label">Title <sup class="text-danger">*</sup></label>
                     <div class="col-sm-9">

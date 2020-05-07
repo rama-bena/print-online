@@ -7,10 +7,14 @@ function is_logged_in()
         redirect('auth');
     } else {
         $role_id = $ci->session->userdata('role_id');
-        $nowMenu = $ci->uri->segment(1);
+        $link = $ci->uri->segment(1);
 
-        $nowMenuId = $ci->db->get_where('user_menu', ['menu' => $nowMenu])->row_array();
-        $menuId = $nowMenuId['id'];
+        if ($ci->uri->segment(2)) {
+            $link = $link . '/' . $ci->uri->segment(2);
+        }
+
+        $result_query = $ci->db->get_where('user_sub_menu', ['url' => $link])->row_array();
+        $menuId = $result_query['menu_id'];
 
         $userAccess = $ci->db->get_where('user_access_menu', [
             'role_id' => $role_id,
