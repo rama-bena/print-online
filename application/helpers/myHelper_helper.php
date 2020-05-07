@@ -9,10 +9,6 @@ function is_logged_in()
         $role_id = $ci->session->userdata('role_id');
         $link = $ci->uri->segment(1);
 
-        if ($ci->uri->segment(2)) {
-            $link = $link . '/' . $ci->uri->segment(2);
-        }
-
         $result_query = $ci->db->get_where('user_sub_menu', ['url' => $link])->row_array();
         $menuId = $result_query['menu_id'];
 

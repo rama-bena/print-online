@@ -52,6 +52,10 @@ class Admin extends CI_Controller
         $this->Admin_model->changeRole($idChange, $newRoleId);
 
         // masih belum lengkap
+        if ($idNow == $idChange) {
+            $this->session->set_userdata('role_id', $newRoleId);
+        }
+
         if ($idNow == $idChange && $newRoleId == '2') {
             $this->session->set_userdata('role_id', '2');
             redirect('user');

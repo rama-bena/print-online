@@ -11,7 +11,6 @@ class Admin_model extends CI_Model
 
         $this->model->deleteFilePrint($id);
 
-
         $this->db->where('id', $id);
         $this->db->delete('user');
     }
