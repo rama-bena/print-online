@@ -51,6 +51,7 @@ class Admin extends CI_Controller
         $newRoleId = $this->input->post('radio');
         $this->Admin_model->changeRole($idChange, $newRoleId);
 
+        // masih belum lengkap
         if ($idNow == $idChange && $newRoleId == '2') {
             $this->session->set_userdata('role_id', '2');
             redirect('user');
