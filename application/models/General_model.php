@@ -16,6 +16,11 @@ class General_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
+    public function makeDirectory($id)
+    {
+        mkdir('./file-print/' . $id);
+    }
+
     public function deleteImage($image)
     {
         if ($image != 'default.png') {

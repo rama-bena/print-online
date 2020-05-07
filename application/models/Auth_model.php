@@ -52,7 +52,8 @@ class Auth_model extends CI_Model
         $this->db->insert('user_token', $user_token);
 
         $user = $this->db->get_where('user', ['email' => $email])->row_array();
-        mkdir('./file-print/' . $user['id']);
+        $this->load->model('General_model', 'model');
+        $this->model->makeDirectory($user['id']);
         $this->sendEmail($token, 'verify', $email);
     }
 
