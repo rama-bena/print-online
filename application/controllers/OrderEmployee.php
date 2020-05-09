@@ -16,42 +16,16 @@ class OrderEmployee extends CI_Controller
         $data['user'] = $this->model->getUser();
         $data['title'] = 'Upload';
 
-        $po = "SELECT `id` `id_po`, `id_file`, `id_employee`,
-                         `id_status`, `date_upload`, `date_process`,
-                         `date_finish`, `date_taken`, `is_reject`,
-                         `keterangan_reject` FROM `print_order`";
-
-        // $result = $this->db->query($query)->result_array();
-        // echo '<pre>';
-        // print_r($result);
-        // echo '</pre>';
-        // die;
-
-        $query = "SELECT `id_member`, `title`, `filename`,
-                         `num_print`, `keterangan` ,`po`.* 
-                  FROM ($po) `po`
-                  JOIN `print_file` `pf`
-                    ON `id_file` = `pf`.`id`
-                  WHERE `id_status` = 1";
-
-        // $po_pf = $this->db->query($query)->result_array();
-        // echo '<pre>';
-        // print_r($po_pf);
-        // echo '</pre>';
-        // die;
-
-        $query = "SELECT `po_pf`.*, `name`, `email`, `no_telp` FROM ($query) `po_pf`
-                    JOIN `user` 
-                    ON `id_member` = `user`.`id` ";
-
-        $data['uploads'] = $this->db->query($query)->result_array();
-
-        // echo '<pre>';
-        // print_r($data['uploads']);
-        // echo '</pre>';
-        // die;
-
+        $data['uploads'] = $this->OrderEmployee_model->getAllOrderStatus(1);
         viewDefault('orderEmployee/index', $data);
+    }
+
+    public function reject($id_po)
+    {
+        $keterangan_reject = $this->input->post('keterangan_reject');
+        $id_employee = $this->model->getUser()['id'];
+        $this->OrderEmployee_model->reject($id_po, $id_employee, $keterangan_reject);
+        $this->index();
     }
 
     public function process()

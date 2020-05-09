@@ -65,14 +65,13 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="<?= base_url('orderEmployee/reject') ?>" method="post">
+                    <form action="<?= base_url('orderEmployee/reject/') . $upload['id_po']; ?>" method="post">
                         <div class="modal-body">
                             <div class="form-group row">
                                 <label for="keterangan_reject" class="col-sm-3 col-form-label">Keterangan Reject<sup class="text-danger">*</sup></label>
                                 <div class="col-sm-9">
-                                    <textarea class=" form-control" id="keterangan_reject" name="keterangan_reject" rows="2" placeholder="why we rejected this file?"></textarea>
+                                    <textarea class=" form-control" id="keterangan_reject" name="keterangan_reject" rows="2" placeholder="why we rejected this file?" required></textarea>
                                 </div>
-                                <?= form_error('keterangan_reject', '<small class="text-danger pl-3">', '</small>'); ?>
                             </div>
                             <div class="modal-footer">
                                 <div class="form-group">

@@ -37,7 +37,6 @@ class OrderPrint_model extends CI_Model
                 'date_process' => 0,
                 'date_finish'  => 0,
                 'date_taken'   => 0,
-                'is_reject'    => 0,
                 'keterangan_reject' => ''
             ];
 
