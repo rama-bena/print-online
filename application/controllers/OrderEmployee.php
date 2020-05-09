@@ -40,16 +40,16 @@ class OrderEmployee extends CI_Controller
         // echo '</pre>';
         // die;
 
-        $query = "SELECT * FROM ($query) `po_pf`
+        $query = "SELECT `po_pf`.*, `name`, `email`, `no_telp` FROM ($query) `po_pf`
                     JOIN `user` 
                     ON `id_member` = `user`.`id` ";
 
-        $po_pf_user = $this->db->query($query)->result_array();
+        $data['uploads'] = $this->db->query($query)->result_array();
 
-        echo '<pre>';
-        print_r($po_pf_user);
-        echo '</pre>';
-        die;
+        // echo '<pre>';
+        // print_r($data['uploads']);
+        // echo '</pre>';
+        // die;
 
         viewDefault('orderEmployee/index', $data);
     }
