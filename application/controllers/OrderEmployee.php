@@ -31,7 +31,7 @@ class OrderEmployee extends CI_Controller
     public function toProcess($id_po)
     {
         $id_employee = $this->model->getUser()['id'];
-        OrderEmployee_model->toProcess($id_po, $id_employee);
+        $this->OrderEmployee_model->toProcess($id_po, $id_employee);
         $this->index();
     }
 
@@ -39,7 +39,15 @@ class OrderEmployee extends CI_Controller
     {
         $data['user'] = $this->model->getUser();
         $data['title'] = 'Process';
+        $data['processArr'] = $this->OrderEmployee_model->getAllOrderStatus(2);
         viewDefault('orderEmployee/process', $data);
+    }
+
+    public function toFinish($id_po)
+    {
+        $price = $this->input->post('price');
+        $this->OrderEmployee_model->toFinish($id_po, $price);
+        $this->process();
     }
 
     public function finish()

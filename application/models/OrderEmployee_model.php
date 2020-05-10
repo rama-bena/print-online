@@ -23,6 +23,16 @@ class OrderEmployee_model extends CI_Model
         return $this->db->query($po_pf_user)->result_array();
     }
 
+    public function reject($id_po, $id_employee, $keterangan_reject)
+    {
+        $this->db->set('id_employee', $id_employee);
+        $this->db->set('id_status', 5);
+        $this->db->set('date_process', time());
+        $this->db->set('keterangan_reject', $keterangan_reject);
+        $this->db->where('id', $id_po);
+        $this->db->update('print_order');
+    }
+
     public function toProcess($id_po, $id_employee)
     {
         $this->db->set('id_employee', $id_employee);
@@ -32,12 +42,11 @@ class OrderEmployee_model extends CI_Model
         $this->db->update('print_order');
     }
 
-    public function reject($id_po, $id_employee, $keterangan_reject)
+    public function toFinish($id_po, $price)
     {
-        $this->db->set('id_employee', $id_employee);
-        $this->db->set('id_status', 5);
-        $this->db->set('date_process', time());
-        $this->db->set('keterangan_reject', $keterangan_reject);
+        $this->db->set('id_status', 3);
+        $this->db->set('price', $price);
+        $this->db->set('date_finish', time());
         $this->db->where('id', $id_po);
         $this->db->update('print_order');
     }
