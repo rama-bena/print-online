@@ -33,6 +33,7 @@ class OrderPrint_model extends CI_Model
                 'id_file'      => $file['id'],
                 'id_employee'  => 0,
                 'id_status'    => 1,
+                'price'        => 0,
                 'date_upload'  => time(),
                 'date_process' => 0,
                 'date_finish'  => 0,

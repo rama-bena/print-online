@@ -4,7 +4,7 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
 
-    <?php foreach ($processArr as $process) : ?>
+    <?php foreach ($orders as $process) : ?>
 
         <div class="card border-primary col-sm-10 mt-5">
             <div class="card-body">
@@ -51,7 +51,7 @@
         </div>
     <?php endforeach; ?>
 
-    <?php foreach ($processArr as $process) : ?>
+    <?php foreach ($orders as $process) : ?>
         <!-- MODAL REJECT-->
         <div class="modal fade" id="finish-<?= $process['id_po']; ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">

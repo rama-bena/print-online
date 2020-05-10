@@ -16,7 +16,7 @@ class OrderEmployee extends CI_Controller
         $data['user'] = $this->model->getUser();
         $data['title'] = 'Upload';
 
-        $data['uploads'] = $this->OrderEmployee_model->getAllOrderStatus(1);
+        $data['orders'] = $this->OrderEmployee_model->getAllOrderStatus(1);
         viewDefault('orderEmployee/index', $data);
     }
 
@@ -39,7 +39,7 @@ class OrderEmployee extends CI_Controller
     {
         $data['user'] = $this->model->getUser();
         $data['title'] = 'Process';
-        $data['processArr'] = $this->OrderEmployee_model->getAllOrderStatus(2);
+        $data['orders'] = $this->OrderEmployee_model->getAllOrderStatus(2);
         viewDefault('orderEmployee/process', $data);
     }
 
@@ -54,7 +54,14 @@ class OrderEmployee extends CI_Controller
     {
         $data['user'] = $this->model->getUser();
         $data['title'] = 'Finish';
+        $data['orders'] = $this->OrderEmployee_model->getAllOrderStatus(3);
         viewDefault('orderEmployee/finish', $data);
+    }
+
+    public function toTaken($id_po)
+    {
+        $this->OrderEmployee_model->toTaken($id_po);
+        $this->finish();
     }
 
     public function taken()

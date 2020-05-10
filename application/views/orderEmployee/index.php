@@ -5,7 +5,7 @@
     <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
 
 
-    <?php foreach ($uploads as $upload) : ?>
+    <?php foreach ($orders as $upload) : ?>
 
         <div class="card border-primary col-sm-10 mt-5">
             <div class="card-body">
@@ -54,7 +54,7 @@
         </div>
     <?php endforeach; ?>
 
-    <?php foreach ($uploads as $upload) : ?>
+    <?php foreach ($orders as $upload) : ?>
         <!-- MODAL REJECT-->
         <div class="modal fade" id="reject-<?= $upload['id_po']; ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
