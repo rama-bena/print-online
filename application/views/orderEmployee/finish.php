@@ -41,7 +41,6 @@
                 <div class="form-group row">
                     <label for="keterangan" class="col-sm-4 col-form-label">keterangan</label>
                     <div class="col-sm-8">
-                        <!-- <input type="text" class="form-control" id="keterangan" name="keterangan" value="<?= $order['keterangan'] ?>" readonly> -->
                         <textarea class="form-control" id="keterangan" name="keterangan" rows="2" readonly> <?= $order['keterangan'] ?></textarea>
                     </div>
                 </div>
@@ -54,7 +53,6 @@
             </div>
             <div class="card-footer">
                 <div class="form-group row justify-content-end">
-                    <!-- <div class="col-sm-9"></div> -->
                     <div class="">
                         <a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#taken-<?= $order['id_po']; ?>"> taken</a>
                     </div>

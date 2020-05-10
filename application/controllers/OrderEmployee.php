@@ -68,6 +68,7 @@ class OrderEmployee extends CI_Controller
     {
         $data['user'] = $this->model->getUser();
         $data['title'] = 'Taken';
+        $data['orders'] = $this->OrderEmployee_model->getAllOrderStatus(4);
         viewDefault('orderEmployee/taken', $data);
     }
 }
