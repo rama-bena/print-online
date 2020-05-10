@@ -23,6 +23,15 @@ class OrderEmployee_model extends CI_Model
         return $this->db->query($po_pf_user)->result_array();
     }
 
+    public function toProcess($id_po, $id_employee)
+    {
+        $this->db->set('id_employee', $id_employee);
+        $this->db->set('id_status', 2);
+        $this->db->set('date_process', time());
+        $this->db->where('id', $id_po);
+        $this->db->update('print_order');
+    }
+
     public function reject($id_po, $id_employee, $keterangan_reject)
     {
         $this->db->set('id_employee', $id_employee);

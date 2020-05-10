@@ -28,6 +28,13 @@ class OrderEmployee extends CI_Controller
         $this->index();
     }
 
+    public function toProcess($id_po)
+    {
+        $id_employee = $this->model->getUser()['id'];
+        OrderEmployee_model->toProcess($id_po, $id_employee);
+        $this->index();
+    }
+
     public function process()
     {
         $data['user'] = $this->model->getUser();

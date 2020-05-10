@@ -73,17 +73,39 @@
                                     <textarea class=" form-control" id="keterangan_reject" name="keterangan_reject" rows="2" placeholder="why we rejected this file?" required></textarea>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <div class="form-group">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-danger"> Reject</button>
-                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-danger"> Reject</button>
                             </div>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
-
+        <!-- MODAL PROCESS -->
+        <div class="modal fade" id="process-<?= $upload['id_po']; ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Process</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure want to process?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <a href="<?= base_url('orderEmployee/toProcess/') . $upload['id_po']; ?>" class="btn btn-primary">Process</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     <?php endforeach; ?>
 
     <!-- End page Content -->
